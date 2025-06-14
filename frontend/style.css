@@ -1,0 +1,460 @@
+/* frontend/style.css - tiene 363 lineas de codigo, no perder ninguna linea de codigo, no borrar ningun codigo original*/
+:root {
+  --color-bg: #f4f4f4;
+  --color-text: #333;
+  --color-primary: #1a1a1a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding-top: 100px; /* espacio para header fijo */
+  text-align: center;
+}
+
+
+/* ============================
+   HEADER (fijo en top)
+============================ */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #ddd;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+}
+.header img {
+  height: 80px;
+  object-fit: contain;
+}
+.main-nav {
+  display: flex;
+  gap: 1rem;
+}
+.nav-link {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+.nav-link:hover {
+  transform: scale(1.05);
+}
+
+/* ============================
+   BUSCADOR (en header)
+============================ */
+.search-container {
+  position: relative;
+  margin: 0 1rem;
+  flex: 1;
+  max-width: 400px;
+}
+#anime-search {
+  width: 100%;
+  padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #999;
+  font-size: 1rem;
+}
+#anime-search::placeholder {
+  color: #666;
+}
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #666;
+}
+.autocomplete-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  display: none;
+  z-index: 1001;
+}
+.autocomplete-list li {
+  padding: 0.5rem;
+  cursor: pointer;
+  text-align: left;
+}
+.autocomplete-list li:hover {
+  background: #f0f0f0;
+}
+
+/* ============================
+   CONTENEDOR PRINCIPAL
+============================ */
+#app {
+  max-width: 1200px;
+  margin: 2rem auto;
+}
+
+/* ============================
+   GRID DE CARTAS (Anime/Manga)
+============================ */
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* ============================
+   CARTAS (Anime, Manga, Capítulo)
+============================ */
+.anime-card,
+.manga-card,
+.capitulo-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.3s;
+  text-align: center;
+  max-width: 200px;
+}
+.anime-card:hover,
+.manga-card:hover,
+.capitulo-card:hover {
+  transform: translateY(-5px);
+}
+.anime-card img,
+.manga-card img,
+.capitulo-card img {
+  width: 100%;
+  display: block;
+}
+
+/* ============================
+   INFO ANIME (portada + ficha)
+============================ */
+.info-anime {
+  display: flex;
+  gap: 1rem;
+  background: #ffe;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+.info-portada img {
+  width: 200px;
+  border-radius: 4px;
+}
+.info-datos {
+  text-align: left;
+}
+.info-datos h2 {
+  margin-bottom: 0.5rem;
+}
+.info-datos p {
+  margin: 0.25rem 0;
+}
+.info-datos .descripcion {
+  margin-top: 0.5rem;
+}
+
+/* ============================
+   LAYOUT REPRODUCTOR: 3 COLUMNAS
+============================ */
+.player-container {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px;
+  gap: 1rem;
+  align-items: start;
+}
+
+/* ============================
+   SELECTOR DE IDIOMA
+============================ */
+#idioma-selector {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.idioma-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #ccc;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.idioma-btn.activo {
+  background: orange;
+  color: white;
+}
+
+/* ============================
+   COLUMNA IZQUIERDA: Scroll de capítulos
+============================ */
+.chapter-panel {
+  background: #cef;
+  border-radius: 8px;
+  padding: 0.5rem;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+}
+.chapter-panel h3 {
+  margin-bottom: 0.5rem;
+}
+.chapter-panel input {
+  width: 100%;
+  padding: 0.25rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #999;
+}
+.chapter-list {
+  flex: 1;
+  overflow-y: auto; /* scroll nativo */
+}
+.chapter-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.chapter-list li {
+  padding: 0.25rem 0;
+  cursor: pointer;
+}
+.chapter-list li.active {
+  background: orange;
+  color: #fff;
+  border-radius: 4px;
+}
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+.chapter-nav button {
+  width: 48%;
+}
+
+/* ============================
+   VIDEO CENTRAL
+============================ */
+.video-panel {
+  background: #ff8;
+  border: 2px solid #f00;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+.video-panel iframe {
+  width: 100%;
+  height: 60vh;
+  border: none;
+  border-radius: 4px;
+}
+
+/* ============================
+   COLUMNA DERECHA: Relaciones
+============================ */
+.sidebar-relations {
+  background: #cef;
+  border-radius: 8px;
+  min-height: 60vh;
+  padding: 0.5rem;
+}
+.sidebar-relations .rel-item {
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.sidebar-relations .rel-item img {
+  width: 100%;
+  border-radius: 4px;
+}
+.sidebar-relations .rel-item p {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* ============================
+   MODO CASCADA / CARRUSEL MANGA
+============================ */
+.cascade-mode img {
+  width: 80%;
+  max-width: 800px;
+  margin: 10px auto;
+  display: block;
+}
+.mode-switch {
+  margin: 1rem 0;
+}
+.carousel-mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.carousel-mode img {
+  max-width: 800px;
+  width: 80%;
+}
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 3rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  user-select: none;
+  margin-top: 1rem;
+}
+.carousel-nav span:hover {
+  color: #555;
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+@media (max-width: 900px) {
+  .player-container {
+    grid-template-columns: 1fr;
+  }
+  .chapter-panel,
+  .video-panel,
+  .sidebar-relations {
+    height: auto;
+  }
+}
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #app {
+    padding: 1rem;
+  }
+  .anime-card,
+  .manga-card,
+  .capitulo-card {
+    width: 100%;
+  }
+}
+
+/* ============================
+   SECCIÓN RECENTES
+============================ */
+.recientes-section {
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  text-align: left;
+}
+.recientes-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+#recientes-list .recent-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.3s;
+  text-align: center;
+  max-width: 150px;
+  padding: 0.5rem;
+}
+#recientes-list .recent-card:hover {
+  transform: translateY(-5px);
+}
+#recientes-list .recent-card img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+#recientes-list .recent-card p {
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+
+/* slide */
+
+
+#slides-root {
+  position: absolute;
+  top: 100px; /* Ajustalo según el alto del header */
+  left: 0;
+  right: 0;
+  pointer-events: none; /* para que no bloquee clics debajo */
+  z-index: 10;
+}
+
+.slide-section {
+  position: absolute;
+  top: 0;
+  max-height: calc(100vh - 120px); /* evita que tape el footer o el header */
+  overflow-y: auto;
+  width: 160px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 1rem;
+  pointer-events: auto; /* volver a activar eventos dentro */
+}
+
+.slide-izq {
+  left: 0;
+  border-right: 1px solid #333;
+}
+
+.slide-der {
+  right: 0;
+  border-left: 1px solid #333;
+}
+
+.slide-section h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.slide-card {
+  cursor: pointer;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.slide-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto;
+}
+
+.slide-card p {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}

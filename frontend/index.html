@@ -1,0 +1,53 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Portal de Anime & Manga: capítulos, imágenes y más en una SPA ligera">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Anime & Manga SPA">
+  <meta property="og:description" content="Capítulos, imágenes y más">
+  <title>Anime & Manga</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <a href="/" data-link>
+      <img src="imagen/logo.png" alt="Logo Anime & Manga" width="100" height="50">
+    </a>
+    <h1 class="sr-only">Anime & Manga - Portal SPA</h1>
+    <div class="search-container">
+      <label for="anime-search" class="sr-only">Buscar anime</label>
+      <input type="search" id="anime-search" placeholder="Buscar anime">
+      <span class="search-icon">&#128269;</span>
+      <ul id="anime-suggestions" class="autocomplete-list"></ul>
+    </div>
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="/" class="nav-link" data-link>Anime</a>
+      <a href="/manga" class="nav-link" data-link>Manga</a>
+    </nav>
+  </header>
+
+  <!-- CONTENEDOR PARA SLIDERS (se inyecta dinámicamente) -->
+  <div id="slides-root"></div>
+
+  <!-- SECCIÓN RECENTES -->
+  <section id="recientes" class="recientes-section">
+    <h2>Recientes</h2>
+    <div id="recientes-list" class="grid-cards"></div>
+  </section>
+
+  <main id="app"></main>
+
+  <footer>
+    <p>&copy; 2025 Anime & Manga. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="data.js" defer></script>
+  <script src="infoAnime.js" defer></script>
+  <script src="recientes.js" defer></script>
+  <script src="slide.js" defer></script> <!-- NUEVO -->
+  <script src="app.js" defer></script>
+</body>
+</html>
