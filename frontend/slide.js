@@ -1,6 +1,9 @@
 function initSlides() {
-  const root = document.getElementById('slides-root');
-  if (!root) return;
+  // No buscamos slides-root porque no existe más
+  const agregadosCont = document.querySelector('.slide-agregados');
+  const estrenosCont = document.querySelector('.slide-estrenos');
+
+  if (!agregadosCont && !estrenosCont) return;
 
   const path = location.pathname;
   const isAnimeList = (
@@ -8,7 +11,8 @@ function initSlides() {
     (path.startsWith('/anime') && !location.search.includes('search=') && location.search === '')
   );
   if (!isAnimeList) {
-    root.innerHTML = '';
+    if (agregadosCont) agregadosCont.innerHTML = '';
+    if (estrenosCont) estrenosCont.innerHTML = '';
     return;
   }
 
@@ -20,9 +24,9 @@ function initSlides() {
     if (info.estado === 'estreno') estrenoKeys.push(key);
   }
 
-  const makeSlideColumn = (keys, positionClass, titulo) => {
+  const makeSlideColumn = (keys, titulo) => {
     const cont = document.createElement('div');
-    cont.className = `slide-section ${positionClass}`;
+    cont.className = 'slide-section';
     const h3 = document.createElement('h3');
     h3.textContent = titulo.toUpperCase();
     cont.appendChild(h3);
@@ -42,9 +46,15 @@ function initSlides() {
     return cont;
   };
 
-  root.innerHTML = '';
-  if (agregadoKeys.length) root.appendChild(makeSlideColumn(agregadoKeys, 'slide-izq', 'Agregados'));
-  if (estrenoKeys.length) root.appendChild(makeSlideColumn(estrenoKeys, 'slide-der', 'Estrenos'));
+  if (agregadosCont) {
+    agregadosCont.innerHTML = ''; // limpiamos el aside
+    agregadosCont.appendChild(makeSlideColumn(agregadoKeys, 'Agregados'));
+  }
+
+  if (estrenosCont) {
+    estrenosCont.innerHTML = ''; // limpiamos el aside
+    estrenosCont.appendChild(makeSlideColumn(estrenoKeys, 'Estrenos'));
+  }
 }
 
 window.addEventListener('DOMContentLoaded', initSlides);
