@@ -1,16 +1,10 @@
 /* frontend/style.css - tiene 363 lineas de codigo, no perder ninguna linea de codigo, no borrar ningun codigo original*/
-/* ===================================================
-   VARIABLES GLOBALES
-=================================================== */
 :root {
   --color-bg: #f4f4f4;
   --color-text: #333;
   --color-primary: #1a1a1a;
 }
 
-/* ===================================================
-   RESETEO BÁSICO Y ESTILO GENERAL
-=================================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,13 +15,14 @@ body {
   font-family: sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
-  padding-top: 60px;
+  padding-top: 60px; /* espacio para header fijo */
   text-align: center;
 }
 
-/* ===================================================
-   HEADER (FIJO EN LA PARTE SUPERIOR)
-=================================================== */
+
+/* ============================
+   HEADER (fijo en top)
+============================ */
 .header {
   position: fixed;
   top: 0;
@@ -40,7 +35,6 @@ body {
   padding: 0.5rem 1rem;
   z-index: 1000;
 }
-
 .header img.logo {
   height: 40px;
   width: auto;
@@ -51,7 +45,6 @@ body {
   display: flex;
   gap: 1rem;
 }
-
 .nav-link {
   background: var(--color-primary);
   color: #fff;
@@ -60,21 +53,19 @@ body {
   text-decoration: none;
   transition: transform 0.2s;
 }
-
 .nav-link:hover {
   transform: scale(1.05);
 }
 
-/* ===================================================
-   BUSCADOR EN HEADER
-=================================================== */
+/* ============================
+   BUSCADOR (en header)
+============================ */
 .search-container {
   position: relative;
   margin: 0 1rem;
   flex: 1;
   max-width: 400px;
 }
-
 #anime-search {
   width: 100%;
   padding: 0.5rem 2.5rem 0.5rem 0.5rem;
@@ -82,11 +73,9 @@ body {
   border: 1px solid #999;
   font-size: 1rem;
 }
-
 #anime-search::placeholder {
   color: #666;
 }
-
 .search-icon {
   position: absolute;
   right: 10px;
@@ -96,7 +85,6 @@ body {
   font-size: 1.2rem;
   color: #666;
 }
-
 .autocomplete-list {
   position: absolute;
   top: 100%;
@@ -110,68 +98,66 @@ body {
   display: none;
   z-index: 1001;
 }
-
 .autocomplete-list li {
   padding: 0.5rem;
   cursor: pointer;
   text-align: left;
 }
-
 .autocomplete-list li:hover {
   background: #f0f0f0;
 }
 
-/* ===================================================
+/* ============================
    CONTENEDOR PRINCIPAL
-=================================================== */
+============================ */
 #app {
   max-width: 1200px;
   margin: 2rem auto;
 }
 
-/* ===================================================
-   SECCIÓN ACTUAL (RECENTES + ESTRENOS)
-=================================================== */
+/* ==============================
+   BLOQUE PRINCIPAL: RECENTES + ESTRENOS
+   ============================== */
 .actual {
   display: flex;
   gap: 1rem;
-  align-items: flex-start;
+  align-items: flex-start;     /* Alinea arriba */
   max-width: 1200px;
-  margin: 1rem auto;
+  margin: 1rem auto;           /* Separación superior y centrado */
   padding: 0 1rem;
 }
 
 .actual > .recientes-section {
-  flex: 1;
+  flex: 1;                     /* Ocupa el espacio restante */
 }
 
 .actual > .slide-panel.slide-estrenos {
-  flex: 0 0 200px;
+  flex: 0 0 200px;             /* Ancho fijo: ajústalo a tu slide */
 }
 
-/* ===================================================
-   SECCIÓN AGREGADOS
-=================================================== */
+/* ==============================
+   BLOQUE SECUNDARIO: AGREGADOS
+   ============================== */
 .agregados {
   max-width: 1200px;
-  margin: 2rem auto;
+  margin: 2rem auto;           /* Separación respecto al bloque superior */
   padding: 0 1rem;
 }
 
 .agregados > .slide-panel.slide-agregados {
-  width: 100%;
+  width: 100%;                 /* Ocupa todo el ancho del contenedor */
 }
 
 #recientes-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas iguales */
   gap: 1rem;
   padding: 1rem;
 }
 
-/* ===================================================
-   DESACTIVAR POSICIONAMIENTO FLOTANTE SLIDES
-=================================================== */
+/* ==============================
+   DESACTIVAR POSICIONAMIENTO FLOTANTE DE SLIDES
+   ============================== */
 #slides-root,
 .slide-panel {
   position: static !important;
@@ -182,36 +168,32 @@ body {
   z-index: auto !important;
 }
 
-/* ===================================================
-   SLIDE AGREGADOS (GRID)
-=================================================== */
+/* ==============================
+   SLIDE “AGREGADOS”: 8 columnas × 2 filas
+   ============================== */
 .slide-panel.slide-agregados {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 0.5rem;
+  grid-template-columns: repeat(8, 1fr); /* siempre 8 ítems por fila */
+  gap: 0.5rem;                           /* espacio entre tarjetas */
+  
+  /* Ajusta este valor según la altura real de .slide-card */
+  /* Ejemplo: si cada .slide-card mide 120px + 0.5rem gap, dos filas = 2*120 + 0.5rem */
   max-height: calc(2 * (120px + 0.5rem));
-  overflow-y: auto;
-  padding: 0.5rem;
-  background-color: #e0e0e0;
-  border-radius: 8px;
-  box-shadow: none;
+  
+  overflow-y: auto;   /* si hay >16 ítems, aparece scroll */
+  padding: 0.5rem;    /* opcional, margen interno */
 }
 
+/* Asegúrate de que tus tarjetas tengan altura fija o mínima */
 .slide-panel.slide-agregados .slide-card {
-  height: 120px;
-  overflow: hidden;
+  height: 120px;     /* mismo valor que usaste en el cálculo de max-height */
+  overflow: hidden;  /* recorta texto/imagen extra */
 }
 
-.slide-panel.slide-agregados h3 {
-  margin: 0 0 0.75rem;
-  font-size: 1rem;
-  text-align: center;
-  color: var(--color-primary);
-}
 
-/* ===================================================
-   GRID GENERAL DE CARTAS
-=================================================== */
+/* ============================
+   GRID DE CARTAS (Anime/Manga)
+============================ */
 .grid-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
@@ -220,6 +202,9 @@ body {
   padding: 1rem;
 }
 
+/* ============================
+   CARTAS (Anime, Manga, Capítulo)
+============================ */
 .anime-card,
 .manga-card,
 .capitulo-card {
@@ -232,13 +217,11 @@ body {
   text-align: center;
   max-width: 200px;
 }
-
 .anime-card:hover,
 .manga-card:hover,
 .capitulo-card:hover {
   transform: translateY(-5px);
 }
-
 .anime-card img,
 .manga-card img,
 .capitulo-card img {
@@ -246,9 +229,9 @@ body {
   display: block;
 }
 
-/* ===================================================
-   INFO ANIME
-=================================================== */
+/* ============================
+   INFO ANIME (portada + ficha)
+============================ */
 .info-anime {
   display: flex;
   gap: 1rem;
@@ -258,31 +241,26 @@ body {
   margin-bottom: 1rem;
   align-items: flex-start;
 }
-
 .info-portada img {
   width: 200px;
   border-radius: 4px;
 }
-
 .info-datos {
   text-align: left;
 }
-
 .info-datos h2 {
   margin-bottom: 0.5rem;
 }
-
 .info-datos p {
   margin: 0.25rem 0;
 }
-
 .info-datos .descripcion {
   margin-top: 0.5rem;
 }
 
-/* ===================================================
-   REPRODUCTOR LAYOUT (3 COLUMNAS)
-=================================================== */
+/* ============================
+   LAYOUT REPRODUCTOR: 3 COLUMNAS
+============================ */
 .player-container {
   display: grid;
   grid-template-columns: 200px 1fr 200px;
@@ -290,16 +268,15 @@ body {
   align-items: start;
 }
 
-/* ===================================================
+/* ============================
    SELECTOR DE IDIOMA
-=================================================== */
+============================ */
 #idioma-selector {
   display: flex;
   justify-content: center;
   gap: 1rem;
   margin-bottom: 0.5rem;
 }
-
 .idioma-btn {
   padding: 0.5rem 1rem;
   border: none;
@@ -308,15 +285,14 @@ body {
   cursor: pointer;
   transition: background 0.2s;
 }
-
 .idioma-btn.activo {
   background: orange;
   color: white;
 }
 
-/* ===================================================
-   COLUMNA IZQUIERDA: LISTA CAPÍTULOS
-=================================================== */
+/* ============================
+   COLUMNA IZQUIERDA: Scroll de capítulos
+============================ */
 .chapter-panel {
   background: #cef;
   border-radius: 8px;
@@ -325,11 +301,9 @@ body {
   display: flex;
   flex-direction: column;
 }
-
 .chapter-panel h3 {
   margin-bottom: 0.5rem;
 }
-
 .chapter-panel input {
   width: 100%;
   padding: 0.25rem;
@@ -337,49 +311,42 @@ body {
   border-radius: 4px;
   border: 1px solid #999;
 }
-
 .chapter-list {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: auto; /* scroll nativo */
 }
-
 .chapter-list ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
 .chapter-list li {
   padding: 0.25rem 0;
   cursor: pointer;
 }
-
 .chapter-list li.active {
   background: orange;
   color: #fff;
   border-radius: 4px;
 }
-
 .chapter-nav {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5rem;
 }
-
 .chapter-nav button {
   width: 48%;
 }
 
-/* ===================================================
-   PANEL DE VIDEO
-=================================================== */
+/* ============================
+   VIDEO CENTRAL
+============================ */
 .video-panel {
   background: #ff8;
   border: 2px solid #f00;
   border-radius: 8px;
   padding: 0.5rem;
 }
-
 .video-panel iframe {
   width: 100%;
   height: 60vh;
@@ -387,58 +354,51 @@ body {
   border-radius: 4px;
 }
 
-/* ===================================================
-   COLUMNA DERECHA: RELACIONES
-=================================================== */
+/* ============================
+   COLUMNA DERECHA: Relaciones
+============================ */
 .sidebar-relations {
   background: #cef;
   border-radius: 8px;
   min-height: 60vh;
   padding: 0.5rem;
 }
-
 .sidebar-relations .rel-item {
   margin-bottom: 0.5rem;
   text-align: center;
 }
-
 .sidebar-relations .rel-item img {
   width: 100%;
   border-radius: 4px;
 }
-
 .sidebar-relations .rel-item p {
   margin-top: 0.25rem;
   font-size: 0.9rem;
   font-weight: bold;
 }
 
-/* ===================================================
+/* ============================
    MODO CASCADA / CARRUSEL MANGA
-=================================================== */
+============================ */
 .cascade-mode img {
   width: 80%;
   max-width: 800px;
   margin: 10px auto;
   display: block;
 }
-
 .mode-switch {
   margin: 1rem 0;
 }
-
 .carousel-mode {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
 }
-
 .carousel-mode img {
   max-width: 800px;
   width: 80%;
 }
-
 .carousel-nav {
   display: flex;
   justify-content: center;
@@ -449,36 +409,31 @@ body {
   user-select: none;
   margin-top: 1rem;
 }
-
 .carousel-nav span:hover {
   color: #555;
 }
 
-/* ===================================================
+/* ============================
    RESPONSIVE
-=================================================== */
+============================ */
 @media (max-width: 900px) {
   .player-container {
     grid-template-columns: 1fr;
   }
-
   .chapter-panel,
   .video-panel,
   .sidebar-relations {
     height: auto;
   }
 }
-
 @media (max-width: 600px) {
   .header {
     flex-direction: column;
     align-items: flex-start;
   }
-
   #app {
     padding: 1rem;
   }
-
   .anime-card,
   .manga-card,
   .capitulo-card {
@@ -486,28 +441,67 @@ body {
   }
 }
 
-/* ===================================================
-   SLIDES ABSOLUTOS (FUERA DE SLIDE-PANEL)
-=================================================== */
+/* ============================
+   SECCIÓN RECENTES
+============================ */
+.recientes-section {
+  max-width: 1200px;
+  margin: 1rem auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+}
+.recientes-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+#recientes-list .recent-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.3s;
+  text-align: center;
+  max-width: 150px;
+  padding: 0.5rem;
+}
+#recientes-list .recent-card:hover {
+  transform: translateY(-5px);
+}
+#recientes-list .recent-card img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+#recientes-list .recent-card p {
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+
+/* slide */
+
+
 #slides-root {
   position: absolute;
-  top: 60px;
+  top: 60px; /* Ajustalo según el alto del header */
   left: 0;
   right: 0;
-  pointer-events: none;
+  pointer-events: none; /* para que no bloquee clics debajo */
   z-index: 10;
 }
 
 .slide-section {
   position: absolute;
   top: 0;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 120px); /* evita que tape el footer o el header */
   overflow-y: auto;
   width: 160px;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 1rem;
-  pointer-events: auto;
+  pointer-events: auto; /* volver a activar eventos dentro */
 }
 
 .slide-izq {
@@ -545,9 +539,28 @@ body {
   font-size: 0.875rem;
 }
 
+/* Fondo gris más visible para Estrenos */
 .slide-panel.slide-estrenos {
+  background-color: #e0e0e0; /* gris suave pero visible */
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: none;         /* quita el marco, que era muy sutil */
+}
+
+/* Fondo gris para Agregados, asegurando que crezca con su contenido */
+.slide-panel.slide-agregados {
   background-color: #e0e0e0;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: none;
+  max-height: none !important;
+  overflow: visible  !important;
+}
+
+/* Estilo del título dentro de Agregados */
+.slide-panel.slide-agregados h3 {
+  margin: 0 0 0.75rem;      /* separa el título del contenido */
+  font-size: 1rem;          /* similar al de Estrenos */
+  text-align: center;       /* centrado encima de las tarjetas */
+  color: var(--color-primary); /* o el color que prefieras */
 }
