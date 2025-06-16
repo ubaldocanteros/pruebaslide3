@@ -39,6 +39,11 @@ body {
   height: 80px;
   object-fit: contain;
 }
+.logo {
+  height: 60px;   /* Cambiá este valor según lo grande que quieras el logo */
+  width: auto;    /* Mantiene la proporción natural de la imagen */
+  object-fit: contain;
+}
 .main-nav {
   display: flex;
   gap: 1rem;
