@@ -3,18 +3,17 @@ const MAX_RECIENTES = 20;
 async function fetchCapitulosRecientes() {
   const allCaps = [];
 
-  for (const [animeKey, info] of Object.entries(animeData)) {
+  const allRequests = Object.entries(animeData).flatMap(([animeKey, info]) => {
     const ids = [];
     if (info.idLatino) ids.push(info.idLatino);
     if (info.idJapones) ids.push(info.idJapones);
 
-    for (const fldId of ids) {
+    return ids.map(async fldId => {
       try {
         const url = new URL('https://api.streamwish.com/api/file/list');
         url.searchParams.set('key', STREAMWISH_KEY);
         url.searchParams.set('fld_id', fldId);
         url.searchParams.set('per_page', 100);
-        url.searchParams.set('public', ''); // opcional: ajustar visibilidad
 
         const res = await fetch(url);
         const data = await res.json();
@@ -29,15 +28,15 @@ async function fetchCapitulosRecientes() {
             thumb: file.thumbnail || null
           });
         });
-
       } catch (e) {
-        console.warn(`Error conversando con file/list fld ${fldId}:`, e);
+        console.warn(`Error con fld_id ${fldId}:`, e);
       }
-    }
-  }
+    });
+  });
+
+  await Promise.all(allRequests);
 
   allCaps.sort((a, b) => b.fecha - a.fecha);
-
   return allCaps.slice(0, MAX_RECIENTES);
 }
 
