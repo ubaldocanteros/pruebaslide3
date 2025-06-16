@@ -15,7 +15,7 @@ body {
   font-family: sans-serif;
   background: var(--color-bg);
   color: var(--color-text);
-  padding-top: 100px; /* espacio para header fijo */
+  padding-top: 60px; /* espacio para header fijo */
   text-align: center;
 }
 
