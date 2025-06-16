@@ -1,6 +1,6 @@
 // frontend/app.js - 432 lineas de codigo, no perder ninguno
 
-const API = 'http://localhost:3000/api';
+const API = 'https://pruebaslide3.onrender.com/api';
 const STREAMWISH_KEY = '26687qtx53fsc42bilx4m';
 const app = document.getElementById('app');
 let idiomaActual = localStorage.getItem('idiomaActual') || 'latino';
