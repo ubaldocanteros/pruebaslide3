@@ -35,15 +35,12 @@ body {
   padding: 0.5rem 1rem;
   z-index: 1000;
 }
-.header img {
-  height: 80px;
+.header img.logo {
+  height: 40px;
+  width: auto;
   object-fit: contain;
 }
-.logo {
-  height: 40px;   /* Cambiá este valor según lo grande que quieras el logo */
-  width: auto;    /* Mantiene la proporción natural de la imagen */
-  object-fit: contain;
-}
+
 .main-nav {
   display: flex;
   gap: 1rem;
