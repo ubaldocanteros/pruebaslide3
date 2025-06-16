@@ -407,7 +407,7 @@ body {
 
 #slides-root {
   position: absolute;
-  top: 100px; /* Ajustalo según el alto del header */
+  top: 60px; /* Ajustalo según el alto del header */
   left: 0;
   right: 0;
   pointer-events: none; /* para que no bloquee clics debajo */
