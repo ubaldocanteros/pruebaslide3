@@ -371,7 +371,9 @@ body {
 .recientes-section {
   max-width: 1200px;
   margin: 2rem auto 0;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
 }
 .recientes-section h2 {
   font-size: 1.5rem;
