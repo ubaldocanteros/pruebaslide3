@@ -40,7 +40,7 @@ body {
   object-fit: contain;
 }
 .logo {
-  height: 60px;   /* Cambiá este valor según lo grande que quieras el logo */
+  height: 40px;   /* Cambiá este valor según lo grande que quieras el logo */
   width: auto;    /* Mantiene la proporción natural de la imagen */
   object-fit: contain;
 }
