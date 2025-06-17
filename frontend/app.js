@@ -1,4 +1,4 @@
-// frontend/app.js - 432 lineas de codigo, no perder ninguno
+// frontend/app.js
 
 const API = 'https://pruebaslide3.onrender.com/api';
 const STREAMWISH_KEY = '26687qtx53fsc42bilx4m';
@@ -70,25 +70,33 @@ function navigateTo(url) {
   router();
 }
 
-
 function router() {
-  const parts  = location.pathname.split('/').filter(Boolean);
-  const params = new URLSearchParams(location.search);
-  const sc     = document.querySelector('.search-container');
+  // 1) Sacamos y limpiamos segmentos de ruta
+  let parts = location.pathname.split('/').filter(Boolean);
+
+  // 2) Si el primer segmento es "frontend", lo descartamos
+  if (parts[0] === 'frontend') {
+    parts = parts.slice(1);
+  }
+
+  // 3) Pasamos todo a minúsculas para comparar sin problemas
+  parts = parts.map(p => p.toLowerCase());
+
+  const sc = document.querySelector('.search-container');
   const slides = document.getElementById('slides-root');
   const recientes = document.getElementById('recientes');
 
-  // VISTA LISTA DE ANIME
-  if (parts.length === 0 || (parts[0] === 'anime' && parts.length === 1)) {
+  // VISTA LISTA DE ANIME (°/ ó ruta raíz)
+  if (
+    parts.length === 0 ||
+    (parts[0] === 'anime' && parts.length === 1)
+  ) {
     sc.style.display = 'flex';
     slides.style.display = 'block';
     recientes.style.display = 'block';
 
-    renderAnimeView(params.get('search') || '');
-
-    // Inicializo aquí los sliders, justo antes de salir
+    renderAnimeView(new URLSearchParams(location.search).get('search') || '');
     initSlides();
-
     return;
   }
 
@@ -101,7 +109,6 @@ function router() {
     if (parts.length === 1) renderMangaView();
     else if (parts.length === 2) renderMangaChapters(decodeURIComponent(parts[1]));
     else renderMangaImages(decodeURIComponent(parts[1]), decodeURIComponent(parts[2]));
-
     return;
   }
 
@@ -110,7 +117,6 @@ function router() {
     sc.style.display = 'flex';
     slides.style.display = 'none';
     recientes.style.display = 'none';
-
     renderAnimePlayer(parts[1], parts[2]);
     return;
   }
@@ -123,12 +129,11 @@ function router() {
 }
 
 
-
 /* ================================
    VISTA ANIME (lista)
 ================================ */
 function renderAnimeView(searchTerm = '') {
-  document.title = 'Anime - Anime & Manga';
+  document.title = 'Series de Anime – Anime & Manga';
   app.innerHTML = `<h1>Series de Anime</h1><div class="grid-cards" id="anime-list"></div>`;
   populateAnimeGrid(searchTerm);
 }
@@ -155,6 +160,21 @@ function populateAnimeGrid(searchTerm) {
     cont.appendChild(card);
   });
 }
+
+/* ================================
+   VISTAS MANGA
+   (idénticas a las tuyas, sin cambios…)
+================================ */
+// renderMangaView, renderMangaChapters, renderMangaImages…
+
+/* ================================
+   VISTA PLAYER ANIME
+================================ */
+// renderAnimePlayer…
+
+/* ================================
+   INICIALIZAR SLIDES (idéntica)
+================================ */
 
 /* ================================
    VISTAS MANGA
