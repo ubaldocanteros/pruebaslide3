@@ -452,6 +452,15 @@ body {
   flex-direction: column;
  
 }
+#recientes-list {
+  display: grid;
+  /* Cada tarjeta tendrá al menos 150px, pero puede crecer hasta ocupar 1fr
+     (parte igual del espacio sobrante). */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;      /* espacio entre tarjetas */
+  padding: 0.5rem;/* ajusta según lo necesites */
+}
+
 .recientes-section h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
