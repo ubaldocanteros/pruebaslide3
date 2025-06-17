@@ -186,8 +186,9 @@ body {
 
 /* Asegúrate de que tus tarjetas tengan altura fija o mínima */
 .slide-panel.slide-agregados .slide-card {
-  height: 120px;     /* mismo valor que usaste en el cálculo de max-height */
-  overflow: hidden;  /* recorta texto/imagen extra */
+  /* que crezcan con su contenido */
+  height: auto;
+  overflow: visible;
 }
 
 
