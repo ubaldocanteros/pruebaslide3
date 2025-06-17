@@ -454,11 +454,10 @@ body {
 }
 #recientes-list {
   display: grid;
-  /* Cada tarjeta tendrá al menos 150px, pero puede crecer hasta ocupar 1fr
-     (parte igual del espacio sobrante). */
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;      /* espacio entre tarjetas */
-  padding: 0.5rem;/* ajusta según lo necesites */
+  /* Siempre 4 columnas de igual ancho que llenan el espacio disponible */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 0.5rem;
 }
 
 .recientes-section h2 {
