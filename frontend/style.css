@@ -492,37 +492,7 @@ body {
 
 /* slide */
 
-/* 1) Grid en dos filas: título + tarjetas */
-.slide-panel.slide-agregados {
-  display: grid;
-  grid-template-rows: auto 1fr;      /* fila 1 = auto (h3), fila 2 = resto */
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
-  gap: 0.5rem;                       /* espacio entre tarjetas */
-  padding: 1rem;
-  
-  /* Quitar cualquier tope de altura para que no se corten */
-  max-height: none !important;
-  overflow: visible !important;
-}
 
-/* 2) El h3 ocupa toda la primera fila */
-.slide-panel.slide-agregados > h3 {
-  grid-column: 1 / -1;               /* del inicio al final */
-  text-align: center;                /* centrado opcional */
-  margin-bottom: 0.75rem;            /* separa un poco del grid */
-}
-
-/* 3) Asegurarnos de que las .slide-card no tengan height fijo */
-.slide-panel.slide-agregados .slide-card {
-  height: auto;                      /* que crezca según su contenido */
-}
-
-/* 4) Que las imágenes rellenen su contenedor sin recorte */
-.slide-panel.slide-agregados .slide-card img {
-  width: 100%;
-  height: auto;                      /* mantiene proporción */
-  object-fit: contain;               /* ajusta dentro del espacio */
-}
 
 /* Fondo gris más visible para Estrenos */
 .slide-panel.slide-estrenos {
