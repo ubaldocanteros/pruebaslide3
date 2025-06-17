@@ -492,7 +492,45 @@ body {
 
 /* slide */
 
+/* ==============================
+   BLOQUE AGREGADOS (solo este bloque)
+   ============================== */
+.slide-panel.slide-agregados {
+  display: grid;
+  grid-template-rows: auto 1fr;        /* Título en fila 1, tarjetas en fila 2 */
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  padding: 1rem;
+  
+  /* Asegura que muestre todas las filas sin recortes */
+  max-height: none !important;
+  overflow: visible !important;
 
+  /* Mantenemos la estética de fondo y bordes */
+  background-color: #e0e0e0;
+  border-radius: 8px;
+}
+
+/* Título “Agregados” ocupa toda la primera fila */
+.slide-panel.slide-agregados > h3 {
+  grid-column: 1 / -1;                 /* desde la columna 1 hasta el final */
+  font-size: 1rem;
+  color: var(--color-primary);
+  text-align: center;
+  margin: 0 0 0.75rem;
+}
+
+/* Cada tarjeta crece según el contenido, sin height fijo */
+.slide-panel.slide-agregados .slide-card {
+  height: auto !important;
+}
+
+/* Imagen dentro de la tarjeta, ajustada y sin recorte */
+.slide-panel.slide-agregados .slide-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
 
 /* Fondo gris más visible para Estrenos */
 .slide-panel.slide-estrenos {
