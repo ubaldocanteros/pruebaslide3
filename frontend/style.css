@@ -492,61 +492,36 @@ body {
 
 /* slide */
 
-
-#slides-root {
-  position: absolute;
-  top: 60px; /* Ajustalo según el alto del header */
-  left: 0;
-  right: 0;
-  pointer-events: none; /* para que no bloquee clics debajo */
-  z-index: 10;
-}
-
-.slide-section {
-  position: absolute;
-  top: 0;
-  max-height: calc(100vh - 120px); /* evita que tape el footer o el header */
-  overflow-y: auto;
-  width: 160px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
+/* 1) Grid en dos filas: título + tarjetas */
+.slide-panel.slide-agregados {
+  display: grid;
+  grid-template-rows: auto 1fr;      /* fila 1 = auto (h3), fila 2 = resto */
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+  gap: 0.5rem;                       /* espacio entre tarjetas */
   padding: 1rem;
-  pointer-events: auto; /* volver a activar eventos dentro */
+  
+  /* Quitar cualquier tope de altura para que no se corten */
+  max-height: none !important;
+  overflow: visible !important;
 }
 
-.slide-izq {
-  left: 0;
-  border-right: 1px solid #333;
+/* 2) El h3 ocupa toda la primera fila */
+.slide-panel.slide-agregados > h3 {
+  grid-column: 1 / -1;               /* del inicio al final */
+  text-align: center;                /* centrado opcional */
+  margin-bottom: 0.75rem;            /* separa un poco del grid */
 }
 
-.slide-der {
-  right: 0;
-  border-left: 1px solid #333;
+/* 3) Asegurarnos de que las .slide-card no tengan height fijo */
+.slide-panel.slide-agregados .slide-card {
+  height: auto;                      /* que crezca según su contenido */
 }
 
-.slide-section h3 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.slide-card {
-  cursor: pointer;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.slide-card img {
+/* 4) Que las imágenes rellenen su contenedor sin recorte */
+.slide-panel.slide-agregados .slide-card img {
   width: 100%;
-  height: auto;
-  border-radius: 4px;
-  display: block;
-  margin: 0 auto;
-}
-
-.slide-card p {
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
+  height: auto;                      /* mantiene proporción */
+  object-fit: contain;               /* ajusta dentro del espacio */
 }
 
 /* Fondo gris más visible para Estrenos */
