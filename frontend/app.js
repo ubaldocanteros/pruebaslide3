@@ -1,72 +1,99 @@
 // frontend/app.js
 
 const API = 'https://pruebaslide3.onrender.com/api';
+
 const STREAMWISH_KEY = '26687qtx53fsc42bilx4m';
 const app = document.getElementById('app');
 let idiomaActual = localStorage.getItem('idiomaActual') || 'latino';
 
 window.addEventListener('popstate', router);
-window.addEventListener('hashchange', router);
 
 document.addEventListener('DOMContentLoaded', () => {
   document.body.addEventListener('click', e => {
     const link = e.target.closest('[data-link]');
     if (link) {
       e.preventDefault();
-      // extraemos la parte después del '#' o la añadimos
-      const href = link.getAttribute('href');
-      if (href.startsWith('#')) {
-        navigateTo(href);
-      } else {
-        navigateTo('#' + new URL(href).pathname + window.location.search);
-      }
+      navigateTo(link.href);
     }
   });
 
-  // Buscador de anime en header (sin cambios)
+  // Buscador de anime en header
   const input = document.getElementById('anime-search');
   const sugg  = document.getElementById('anime-suggestions');
   const icon  = document.querySelector('.search-icon');
-  input.addEventListener('input',  /* ...tu código... */);
-  sugg.addEventListener('click',  /* ...tu código... */);
-  input.addEventListener('keydown', /* ...tu código... */);
-  icon.addEventListener('click',   /* ...tu código... */);
 
-  // Arrancamos en base al hash actual
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    sugg.innerHTML = '';
+    if (!q) return void (sugg.style.display = 'none');
+    const matches = Object.entries(animeData)
+      .filter(([, info]) => info.name.toLowerCase().includes(q))
+      .slice(0, 10);
+    matches.forEach(([key, info]) => {
+      const li = document.createElement('li');
+      li.textContent = info.name;
+      li.dataset.key = key;
+      sugg.appendChild(li);
+    });
+    sugg.style.display = matches.length ? 'block' : 'none';
+  });
+
+  sugg.addEventListener('click', e => {
+    const li = e.target.closest('li');
+    if (!li) return;
+    navigateTo(`/anime/${li.dataset.key}/1`);
+    sugg.style.display = 'none';
+    input.value = '';
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const term = input.value.trim();
+      navigateTo(`/anime?search=${encodeURIComponent(term)}`);
+      sugg.style.display = 'none';
+      input.value = '';
+    }
+  });
+
+  icon.addEventListener('click', () => {
+    const term = input.value.trim();
+    navigateTo(`/anime?search=${encodeURIComponent(term)}`);
+    sugg.style.display = 'none';
+    input.value = '';
+  });
+
   router();
 });
 
-
-function navigateTo(hash) {
-  // Cambiamos sólo el hash, sin recargar la página
-  location.hash = hash;
+function navigateTo(url) {
+  history.pushState(null, null, url);
+  router();
 }
 
 
 function router() {
-  // Leemos el hash sin el '#'
-  const hash = location.hash.slice(1);
-  // Dividimos ruta y query
-  const [path, queryString] = hash.split('?');
-  const parts = (path || '').split('/').filter(Boolean).map(p => p.toLowerCase());
-  const params = new URLSearchParams(queryString || '');
-
-  const sc = document.querySelector('.search-container');
+  const parts  = location.pathname.split('/').filter(Boolean);
+  const params = new URLSearchParams(location.search);
+  const sc     = document.querySelector('.search-container');
   const slides = document.getElementById('slides-root');
   const recientes = document.getElementById('recientes');
 
-  // Ruta raíz o /anime
+  // VISTA LISTA DE ANIME
   if (parts.length === 0 || (parts[0] === 'anime' && parts.length === 1)) {
     sc.style.display = 'flex';
     slides.style.display = 'block';
     recientes.style.display = 'block';
 
     renderAnimeView(params.get('search') || '');
+
+    // Inicializo aquí los sliders, justo antes de salir
     initSlides();
+
     return;
   }
 
-  // /manga ...
+  // VISTA MANGA
   if (parts[0] === 'manga') {
     sc.style.display = 'none';
     slides.style.display = 'none';
@@ -74,18 +101,17 @@ function router() {
 
     if (parts.length === 1) renderMangaView();
     else if (parts.length === 2) renderMangaChapters(decodeURIComponent(parts[1]));
-    else renderMangaImages(
-      decodeURIComponent(parts[1]),
-      decodeURIComponent(parts[2])
-    );
+    else renderMangaImages(decodeURIComponent(parts[1]), decodeURIComponent(parts[2]));
+
     return;
   }
 
-  // /anime/:key/:ep
+  // VISTA PLAYER ANIME
   if (parts[0] === 'anime' && parts.length === 3) {
     sc.style.display = 'flex';
     slides.style.display = 'none';
     recientes.style.display = 'none';
+
     renderAnimePlayer(parts[1], parts[2]);
     return;
   }
@@ -98,15 +124,13 @@ function router() {
 }
 
 
+
 /* ================================
    VISTA ANIME (lista)
 ================================ */
 function renderAnimeView(searchTerm = '') {
-  document.title = 'Series de Anime – Anime & Manga';
-  app.innerHTML = `
-    <h1>Series de Anime</h1>
-    <div class="grid-cards" id="anime-list"></div>
-  `;
+  document.title = 'Anime - Anime & Manga';
+  app.innerHTML = `<h1>Series de Anime</h1><div class="grid-cards" id="anime-list"></div>`;
   populateAnimeGrid(searchTerm);
 }
 
@@ -132,21 +156,6 @@ function populateAnimeGrid(searchTerm) {
     cont.appendChild(card);
   });
 }
-
-/* ================================
-   VISTAS MANGA
-   (idénticas a las tuyas, sin cambios…)
-================================ */
-// renderMangaView, renderMangaChapters, renderMangaImages…
-
-/* ================================
-   VISTA PLAYER ANIME
-================================ */
-// renderAnimePlayer…
-
-/* ================================
-   INICIALIZAR SLIDES (idéntica)
-================================ */
 
 /* ================================
    VISTAS MANGA
