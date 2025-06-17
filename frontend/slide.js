@@ -1,10 +1,12 @@
 function initSlides() {
-  // No buscamos slides-root porque no existe más
+  // Contenedores destino en el HTML
   const agregadosCont = document.querySelector('.slide-agregados');
-  const estrenosCont = document.querySelector('.slide-estrenos');
+  const estrenosCont  = document.querySelector('.slide-estrenos');
 
+  // Si no hay ninguno, salimos
   if (!agregadosCont && !estrenosCont) return;
 
+  // Solo en la lista principal de animes
   const path = location.pathname;
   const isAnimeList = (
     path === '/' ||
@@ -12,24 +14,24 @@ function initSlides() {
   );
   if (!isAnimeList) {
     if (agregadosCont) agregadosCont.innerHTML = '';
-    if (estrenosCont) estrenosCont.innerHTML = '';
+    if (estrenosCont)  estrenosCont.innerHTML = '';
     return;
   }
 
+  // Separar claves por estado
   const agregadoKeys = [];
-  const estrenoKeys = [];
-
+  const estrenoKeys  = [];
   for (const [key, info] of Object.entries(infoAnimes)) {
     if (info.estado === 'agregado') agregadoKeys.push(key);
-    if (info.estado === 'estreno') estrenoKeys.push(key);
+    if (info.estado === 'estreno')  estrenoKeys.push(key);
   }
 
-  const makeSlideColumn = (keys, titulo) => {
-    const cont = document.createElement('div');
-    cont.className = 'slide-section';
+  // Función genérica para renderizar tarjetas en un container
+  const renderCards = (container, keys, titulo) => {
+    container.innerHTML = '';               // limpia contenido previo
     const h3 = document.createElement('h3');
-    h3.textContent = titulo.toUpperCase();
-    cont.appendChild(h3);
+    h3.textContent = titulo;                // título semántico
+    container.appendChild(h3);
 
     keys.forEach(key => {
       const anime = infoAnimes[key];
@@ -40,21 +42,13 @@ function initSlides() {
         <p>${anime.nombre}</p>
       `;
       card.onclick = () => navigateTo(`/anime/${key}/1`);
-      cont.appendChild(card);
+      container.appendChild(card);
     });
-
-    return cont;
   };
 
-  if (agregadosCont) {
-    agregadosCont.innerHTML = ''; // limpiamos el aside
-    agregadosCont.appendChild(makeSlideColumn(agregadoKeys, 'Agregados'));
-  }
-
-  if (estrenosCont) {
-    estrenosCont.innerHTML = ''; // limpiamos el aside
-    estrenosCont.appendChild(makeSlideColumn(estrenoKeys, 'Estrenos'));
-  }
+  // Inyectar en cada contenedor si existe
+  if (agregadosCont) renderCards(agregadosCont, agregadoKeys, 'Agregados');
+  if (estrenosCont)  renderCards(estrenosCont,  estrenoKeys,  'Estrenos');
 }
 
 window.addEventListener('DOMContentLoaded', initSlides);
