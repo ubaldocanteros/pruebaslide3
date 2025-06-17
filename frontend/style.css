@@ -122,7 +122,7 @@ body {
   display: flex;
   gap: 1rem;
   align-items: flex-start;     /* Alinea arriba */
-  width: 100%;
+  max-width: 1200px;
   margin: 1rem auto;           /* Separación superior y centrado */
   padding: 0 1rem;
 }
@@ -134,20 +134,61 @@ body {
 .actual > .slide-panel.slide-estrenos {
   flex: 0 0 200px;             /* Ancho fijo: ajústalo a tu slide */
 }
-/*estrenos*/
 
-.slide-panel.slide-estrenos {
-  flex: 0 0 200px;
-  background-color: #e0e0e0;
-  padding: 0.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+/* ==============================
+   BLOQUE SECUNDARIO: AGREGADOS
+   ============================== */
+.agregados {
+  max-width: 1200px;
+  margin: 2rem auto;           /* Separación respecto al bloque superior */
+  padding: 0 1rem;
 }
 
+.agregados > .slide-panel.slide-agregados {
+  width: 100%;                 /* Ocupa todo el ancho del contenedor */
+}
 
+#recientes-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columnas iguales */
+  gap: 1rem;
+  padding: 1rem;
+}
 
+/* ==============================
+   DESACTIVAR POSICIONAMIENTO FLOTANTE DE SLIDES
+   ============================== */
+#slides-root,
+.slide-panel {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  pointer-events: auto !important;
+  z-index: auto !important;
+}
 
+/* ==============================
+   SLIDE “AGREGADOS”: 8 columnas × 2 filas
+   ============================== */
+.slide-panel.slide-agregados {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr); /* siempre 8 ítems por fila */
+  gap: 0.5rem;                           /* espacio entre tarjetas */
+  
+  /* Ajusta este valor según la altura real de .slide-card */
+  /* Ejemplo: si cada .slide-card mide 120px + 0.5rem gap, dos filas = 2*120 + 0.5rem */
+  max-height: calc(2 * (120px + 0.5rem));
+  
+  overflow-y: auto;   /* si hay >16 ítems, aparece scroll */
+  padding: 0.5rem;    /* opcional, margen interno */
+}
 
+/* Asegúrate de que tus tarjetas tengan altura fija o mínima */
+.slide-panel.slide-agregados .slide-card {
+  height: 120px;     /* mismo valor que usaste en el cálculo de max-height */
+  overflow: hidden;  /* recorta texto/imagen extra */
+}
 
 
 /* ============================
@@ -405,24 +446,24 @@ body {
 ============================ */
 .recientes-section {
   width: 100%;
+  align-items: stretch; /* quita el centrado horizontal */
   margin: 1rem auto 0;
   display: flex;
   flex-direction: column;
+ 
 }
-
-.recientes-section h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-align: left;
-}
-
 #recientes-list {
   display: grid;
+  /* Siempre 4 columnas de igual ancho que llenan el espacio disponible */
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   padding: 0.5rem;
 }
 
+.recientes-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
 #recientes-list .recent-card {
   background: #fff;
   border-radius: 8px;
@@ -430,56 +471,106 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: transform 0.3s;
+  width: 100%;   /* ocupa todo el ancho de su grid-cell */
+  max-width: none; /* opcional si quieres eliminar totalmente el tope */
   text-align: center;
   padding: 0.5rem;
-  width: 100%;
 }
-
+#recientes-list .recent-card:hover {
+  transform: translateY(-5px);
+}
 #recientes-list .recent-card img {
   width: 100%;
   border-radius: 4px;
   margin-bottom: 0.5rem;
-  object-fit: contain;
 }
-
 #recientes-list .recent-card p {
   font-size: 0.9rem;
   margin: 0.25rem 0;
 }
 
 
+/* slide */
 
-/* ==============================
-   BLOQUE AGREGADOS (solo este bloque)
-   ============================== */
-.slide-panel.slide-agregados {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0.5rem;
+
+#slides-root {
+  position: absolute;
+  top: 60px; /* Ajustalo según el alto del header */
+  left: 0;
+  right: 0;
+  pointer-events: none; /* para que no bloquee clics debajo */
+  z-index: 10;
+}
+
+.slide-section {
+  position: absolute;
+  top: 0;
+  max-height: calc(100vh - 120px); /* evita que tape el footer o el header */
+  overflow-y: auto;
+  width: 160px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
   padding: 1rem;
-  background-color: #e0e0e0;
-  border-radius: 8px;
-  max-height: none;
-  overflow: visible;
+  pointer-events: auto; /* volver a activar eventos dentro */
 }
 
-.slide-panel.slide-agregados > h3 {
-  grid-column: 1 / -1;
+.slide-izq {
+  left: 0;
+  border-right: 1px solid #333;
+}
+
+.slide-der {
+  right: 0;
+  border-left: 1px solid #333;
+}
+
+.slide-section h3 {
   font-size: 1rem;
-  color: var(--color-primary);
+  margin-bottom: 1rem;
   text-align: center;
-  margin: 0 0 0.75rem;
 }
 
-.slide-panel.slide-agregados .slide-card {
-  height: auto;
+.slide-card {
+  cursor: pointer;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
-.slide-panel.slide-agregados .slide-card img {
+.slide-card img {
   width: 100%;
   height: auto;
-  object-fit: contain;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto;
 }
 
+.slide-card p {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
 
+/* Fondo gris más visible para Estrenos */
+.slide-panel.slide-estrenos {
+  background-color: #e0e0e0; /* gris suave pero visible */
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: none;         /* quita el marco, que era muy sutil */
+}
+
+/* Fondo gris para Agregados, asegurando que crezca con su contenido */
+.slide-panel.slide-agregados {
+  background-color: #e0e0e0;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: none;
+  max-height: none !important;
+  overflow: visible  !important;
+}
+
+/* Estilo del título dentro de Agregados */
+.slide-panel.slide-agregados h3 {
+  margin: 0 0 0.75rem;      /* separa el título del contenido */
+  font-size: 1rem;          /* similar al de Estrenos */
+  text-align: center;       /* centrado encima de las tarjetas */
+  color: var(--color-primary); /* o el color que prefieras */
+}
