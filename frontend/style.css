@@ -445,11 +445,12 @@ body {
    SECCIÓN RECENTES
 ============================ */
 .recientes-section {
-  max-width: 1200px;
+  width: 100%;
+  align-items: stretch; /* quita el centrado horizontal */
   margin: 1rem auto 0;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra horizontalmente */
+ 
 }
 .recientes-section h2 {
   font-size: 1.5rem;
